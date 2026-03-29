@@ -1,8 +1,9 @@
+// Copyright 2026 Астафьева Анастасия an-astafyeva
+
 #include <iostream>
 #include "../include/fun.h"
 
-int main()
-{
+int main() {
     const char *str = "Hello world test123 ABC def GhI";
 
     std::cout << "faStr1: " << faStr1(str) << std::endl;
@@ -11,4 +12,3 @@ int main()
 
     return 0;
 }
-add main
