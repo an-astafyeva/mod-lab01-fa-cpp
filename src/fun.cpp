@@ -1,98 +1,90 @@
-#include "../include/fun.h"
+// Copyright 2026 Астафьева Анастасия an-astafyeva
+
+#include "fun.h"
 #include <cctype>
 #include <cmath>
 
-unsigned int faStr1(const char *str)
-{
+unsigned int faStr1(const char *str) {
     unsigned int count = 0;
     bool hasDigit = false;
     bool inWord = false;
 
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        if (!isspace(str[i]))
-        {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isspace(static_cast<unsigned char>(str[i]))) {
             inWord = true;
-            if (isdigit(str[i]))
+            if (isdigit(static_cast<unsigned char>(str[i]))) {
                 hasDigit = true;
-        }
-        else
-        {
-            if (inWord && !hasDigit)
+            }
+        } else {
+            if (inWord && !hasDigit) {
                 count++;
-
+            }
             inWord = false;
             hasDigit = false;
         }
     }
 
-    if (inWord && !hasDigit)
+    if (inWord && !hasDigit) {
         count++;
+    }
 
     return count;
 }
 
-unsigned int faStr2(const char *str)
-{
+unsigned int faStr2(const char *str) {
     unsigned int count = 0;
     bool inWord = false;
     bool valid = true;
-    bool firstChecked = false;
+    int pos = 0;
 
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        if (!isspace(str[i]))
-        {
-            if (!inWord)
-            {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isspace(static_cast<unsigned char>(str[i]))) {
+            char ch = str[i];
+
+            if (!inWord) {
                 inWord = true;
                 valid = true;
-                firstChecked = false;
+                pos = 0;
             }
 
-            if (!firstChecked)
-            {
-                if (!isupper(str[i]))
+            if (pos == 0) {
+                if (!(ch >= 'A' && ch <= 'Z')) {
                     valid = false;
-                firstChecked = true;
-            }
-            else
-            {
-                if (!islower(str[i]))
+                }
+            } else {
+                if (!(ch >= 'a' && ch <= 'z')) {
                     valid = false;
+                }
             }
-        }
-        else
-        {
-            if (inWord && valid)
+
+            pos++;
+        } else {
+            if (inWord && valid) {
                 count++;
-
+            }
             inWord = false;
+            valid = true;
+            pos = 0;
         }
     }
 
-    if (inWord && valid)
+    if (inWord && valid) {
         count++;
+    }
 
     return count;
 }
 
-unsigned int faStr3(const char *str)
-{
+unsigned int faStr3(const char *str) {
     unsigned int words = 0;
     unsigned int totalLength = 0;
     unsigned int currentLength = 0;
 
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        if (!isspace(str[i]))
-        {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isspace(static_cast<unsigned char>(str[i]))) {
             currentLength++;
-        }
-        else
-        {
-            if (currentLength > 0)
-            {
+        } else {
+            if (currentLength > 0) {
                 totalLength += currentLength;
                 words++;
                 currentLength = 0;
@@ -100,15 +92,15 @@ unsigned int faStr3(const char *str)
         }
     }
 
-    if (currentLength > 0)
-    {
+    if (currentLength > 0) {
         totalLength += currentLength;
         words++;
     }
 
-    if (words == 0)
+    if (words == 0) {
         return 0;
+    }
 
-    return (unsigned int)round((double)totalLength / words);
+    return static_cast<unsigned int>(
+        round(static_cast<double>(totalLength) / words));
 }
-add solution
